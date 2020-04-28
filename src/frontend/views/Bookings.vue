@@ -16,6 +16,8 @@
             icon="flight_takeoff"
             side="left"
           >
+
+          
             <h5 slot="subtitle" class="q-timeline-subtitle">
               <span data-test="booking-city-date">
                 {{ booking.outboundFlight.departureCity }} &mdash;

@@ -16,5 +16,23 @@
                 "awsserverlessairline44ea6421": {}
             }
         }
+    },
+    "twitchenv": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-awsserverlessairline-twitchenv-232210-authRole",
+            "UnauthRoleArn": "arn:aws:iam::802822705345:role/amplify-awsserverlessairline-twitchenv-232210-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::802822705345:role/amplify-awsserverlessairline-twitchenv-232210-authRole",
+            "Region": "eu-central-1",
+            "DeploymentBucketName": "amplify-awsserverlessairline-twitchenv-232210-deployment",
+            "UnauthRoleName": "amplify-awsserverlessairline-twitchenv-232210-unauthRole",
+            "StackName": "amplify-awsserverlessairline-twitchenv-232210",
+            "StackId": "arn:aws:cloudformation:eu-central-1:802822705345:stack/amplify-awsserverlessairline-twitchenv-232210/67cfb570-8405-11ea-b90b-023cc2de05b4",
+            "AmplifyAppId": "davpq7tdeadld"
+        },
+        "categories": {
+            "auth": {
+                "awsserverlessairline44ea6421": {}
+            }
+        }
     }
 }
