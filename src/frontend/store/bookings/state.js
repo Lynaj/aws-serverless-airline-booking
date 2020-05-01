@@ -7,5 +7,6 @@
  */
 export default {
   bookings: [],
-  paginationToken: ""
+  paginationToken: "",
+  carsPaginationToken: ""
 };

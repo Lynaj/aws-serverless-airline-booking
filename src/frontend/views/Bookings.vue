@@ -5,7 +5,7 @@
         class="q-display-1 text-primary booking__heading"
         data-test="booking-headline"
       >
-        Bookings
+        Car Calculator
       </div>
     </div>
     <div class="bookings">
@@ -16,8 +16,6 @@
             icon="flight_takeoff"
             side="left"
           >
-
-          
             <h5 slot="subtitle" class="q-timeline-subtitle">
               <span data-test="booking-city-date">
                 {{ booking.outboundFlight.departureCity }} &mdash;

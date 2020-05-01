@@ -1,5 +1,5 @@
 
-Catalog module uses Catalog GraphQL API to search flights.
+Catalog module uses Catalog GraphQL API to Search Cars.
 
 ![Front-end Catalog high-level architecture](../../../../media/frontend_modules_catalog.png)
 

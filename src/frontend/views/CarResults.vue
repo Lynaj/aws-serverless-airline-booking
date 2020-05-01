@@ -58,52 +58,96 @@
         <q-fab-action
           color="secondary"
           icon="cancel"
-          @click="filteredFlights = flights"
+          @click="filteredCars = flights"
           glossy
           class="filter__cta"
         />
       </q-fab>
     </q-page-sticky>
+
+
     <div class="heading">
+
+      <!-- Listing of cars -->
       <div class="q-headline text-primary text-center">
         <div class="loader" v-if="loading">
           <flight-loader></flight-loader>
         </div>
-        <div v-if="filteredFlights.length && !loading">
+        <div v-if="filteredCars.length && !loading">
           <span class="results__headline" data-test="results-headline"
-            >Select your flight</span
+            >Select your car</span
           >
         </div>
+        
         <div
-          v-if="!filteredFlights.length && !loading"
+          v-if="!filteredCars.length && !loading"
           class="heading__error row"
         >
           <span
             class="justify-center full-width results__error"
             data-test="results-error"
-            >No results found</span
-          >
+            >No results found
+          </span>
+
           <transition enter-active-class="animated bounce" appear>
+
             <q-btn
               class="cta__button heading__error--cta"
               color="secondary"
-              label="Search flights"
+              label="Search Cars"
               icon="keyboard_arrow_left"
               :to="{ name: 'home' }"
             >
             </q-btn>
+
           </transition>
         </div>
       </div>
+      
+
+      
+      <!-- Listing of spare parts -->
+      <div class="q-headline text-primary text-center">
+        <div class="loader" v-if="loading">
+          <flight-loader></flight-loader>
+        </div>
+        
+        <div
+          v-if="!filteredCars.length && !loading"
+          class="heading__error row"
+        >
+          <span
+            class="justify-center full-width results__error"
+            data-test="results-error"
+            >No spare parts found
+          </span>
+
+          <transition enter-active-class="animated bounce" appear>
+            <q-btn
+              class="cta__button heading__error--cta"
+              color="secondary"
+              label="Search Cars"
+              icon="keyboard_arrow_left"
+              :to="{ name: 'home' }"
+            >
+            </q-btn>
+
+          </transition>
+        </div>
+      </div>
+
+
     </div>
-    <div class="results__flights" v-if="filteredFlights.length && !loading">
+
+
+    <div class="results__flights" v-if="filteredCars.length && !loading">
       <router-link
         :to="{
           name: 'selectedFlight',
           params: { flight: flight },
           query: { flightId: flight.id }
         }"
-        v-for="flight in filteredFlights"
+        v-for="flight in filteredCars"
         :key="flight.id"
       >
         <flight-card :details="flight" />
@@ -136,7 +180,7 @@ import { priceSorter, scheduleSorter } from "../shared/mixins/sorters";
  * Flight Results view displays a collection of Flights from Catalog.
  */
 export default {
-  name: "FlightResults",
+  name: "CarResults",
   components: {
     FlightCard,
     FlightToolbar,
@@ -154,14 +198,16 @@ export default {
     arrival: { type: String, required: true }
   },
   /**
-   * @param {Flight[]} filteredFlights - List of Flights filtered by departure, price or schedule
+   * @param {Flight[]} filteredCars - List of Flights filtered by departure, price or schedule
+   * @param {SpareParts[]} filteredSpareParts - List of spare parts filtered by the car model, car mark and spare part name
    * @param {string} departureTimeFilter - Departure schedule one wishes to filter flights by
    * @param {string} arrivalTimeFilter - Arrival schedule one wishes to filter flights by
    * @param {string} maxPriceFilter - Maximum price one wishes to limit flights to
    */
   data() {
     return {
-      filteredFlights: [],
+      filteredCars: [],
+      filteredSpareParts: [],
       departureTimeFilter: "",
       arrivalTimeFilter: "",
       maxPriceFilter: 300
@@ -173,15 +219,35 @@ export default {
      * this guarantees we attempt talking to Catalog service
      * if our authentication guards && profile module have an user in place
      */
-    if (this.isAuthenticated) {
-      this.loadFlights();
-    }
+    // if (this.isAuthenticated) {
+    this.loadFlights();
+    // }
   },
   methods: {
     /**
-     * loadFlights method fetches all flights via catalog API
+     * loadCars method fetches cars matching given criteria from
+     * Allegro, OLX, otomoto
      */
-    async loadFlights() {
+    async loadCars() {
+      try {
+          await this.$store.dispatch("catalog/fetchFlights", {
+            date: this.date,
+            departure: this.departure,
+            arrival: this.arrival,
+            paginationToken: this.paginationToken
+          });
+
+          this.filteredCars = this.sortByDeparture(this.flights);
+      } catch (error) {
+        console.error(error);
+        this.$q.notify(
+          `Error while fetching Flight results - Check browser console messages`
+        );
+      }
+    },
+
+
+     async loadSpares() {
       try {
         if (this.isAuthenticated) {
           await this.$store.dispatch("catalog/fetchFlights", {
@@ -191,7 +257,7 @@ export default {
             paginationToken: this.paginationToken
           });
 
-          this.filteredFlights = this.sortByDeparture(this.flights);
+          this.filteredCars = this.sortByDeparture(this.flights);
         }
       } catch (error) {
         console.error(error);
@@ -200,13 +266,35 @@ export default {
         );
       }
     },
+
+
+     async loadFlights() {
+      try {
+        if (this.isAuthenticated) {
+          await this.$store.dispatch("catalog/fetchFlights", {
+            date: this.date,
+            departure: this.departure,
+            arrival: this.arrival,
+            paginationToken: this.paginationToken
+          });
+
+          this.filteredCars = this.sortByDeparture(this.flights);
+        }
+      } catch (error) {
+        console.error(error);
+        this.$q.notify(
+          `Error while fetching Flight results - Check browser console messages`
+        );
+      }
+    },
+
     /**
      * setPrice method updates maxPriceFilter and filter flights via filterByMaxPrice mixin
      */
     setPrice() {
       let flights = this.filterByMaxPrice(this.flights, this.maxPriceFilter);
       flights = this.sortByPrice(flights);
-      this.filteredFlights = flights;
+      this.filteredCars = flights;
     },
     /**
      * setDeparture method updates departureTimeFilter and filter flights via filterBySchedule mixin
@@ -216,13 +304,13 @@ export default {
         departure: this.departureTimeFilter
       });
       flights = this.sortByDeparture(flights);
-      this.filteredFlights = flights;
+      this.filteredCars = flights;
     },
     /**
      * setArrival method updates arrivalTimeFilter and filter flights via filterBySchedule mixin
      */
     setArrival() {
-      this.filteredFlights = this.filterBySchedule(this.flights, {
+      this.filteredCars = this.filterBySchedule(this.flights, {
         arrival: this.arrivalTimeFilter
       });
     }

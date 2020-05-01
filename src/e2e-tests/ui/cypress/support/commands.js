@@ -41,6 +41,6 @@ Cypress.Commands.add('login', (options = {}) => {
 
         cy.get('button').click()
     })
-    cy.get('.cta__button > .q-btn-inner > div').contains("Search flights")
+    cy.get('.cta__button > .q-btn-inner > div').contains("Search Cars")
 
 })

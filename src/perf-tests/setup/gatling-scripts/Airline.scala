@@ -33,7 +33,7 @@ object Flight {
                       .exec( _.set("YEAR", YEAR))
                       .exec( _.set("DEPARTURE_CODE", DEPARTURE_CODE))
                       .exec( _.set("ARRIVAL_CODE", ARRIVAL_CODE))
-                      .exec(http("Search Flights")
+                      .exec(http("Search Cars"))
                       .post(APPSYNC_URL)
                       .headers(headerMaps)
                       .header("Authorization", "${token}" )
@@ -171,7 +171,7 @@ object Make {
         .pause(1)
   }
 
-  val searchFlight = scenario("Search Flights").exec(Flight.query)
+  val searchFlight = scenario("Search Cars").exec(Flight.query)
   val profile = scenario("Retrieve User Profile").exec(User.profile)
   val listUserBookings = scenario("List User Bookings").exec(User.bookings)
   val newBooking = scenario("New Booking").exec(Make.booking)

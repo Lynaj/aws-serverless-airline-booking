@@ -1,0 +1,20 @@
+[
+    {"name":"Błotnik lewy przód"},
+    {"name":"Błotnik prawy przód"},
+    {"name":"Błotnik Lewy tył"},
+    {"name":"Błotnik prawy tył"},
+    {"name":"Reflektor lewy przód"},
+    {"name":"Reflektor prawy przód"},
+    {"name":"Reflektor lewy tył"},
+    {"name":"Reflektor Prawy tył"},
+    {"name":"Lampa prawa tył"},
+    {"name":"Lampa lewa tył"},
+    {"name":"Lampa prawa przód"},
+    {"name":"Lampa lewa przód"},
+    {"name":"Zderzak przód"},
+    {"name":"Zderzak tył"},
+    {"name":"Klapa"},
+    {"name":"Maska"},
+    {"name":"Koła"},
+    {"name":"Felgi"}
+]

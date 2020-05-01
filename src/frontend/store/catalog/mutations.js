@@ -32,3 +32,7 @@ export const SET_LOADER = (state, isLoading) => {
 export const SET_FLIGHT_PAGINATION = (state, paginationToken) => {
   state.paginationToken = paginationToken;
 };
+
+export const SET_CARS_PAGINATION = (state, paginationToken) => {
+  state.carsPaginationToken = paginationToken;
+};

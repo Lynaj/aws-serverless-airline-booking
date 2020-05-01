@@ -3,7 +3,7 @@ import Router from "vue-router";
 import DefaultLayout from "./layouts/Default.vue";
 import SearchFlights from "./views/Search.vue";
 import Profile from "./views/Profile.vue";
-import FlightResults from "./views/FlightResults.vue";
+import CarResults from "./views/CarResults.vue";
 import FlightSelection from "./views/FlightSelection.vue";
 import Bookings from "./views/Bookings.vue";
 import Authentication from "./views/Authentication.vue";
@@ -17,38 +17,77 @@ const router = new Router({
       path: "/",
       component: DefaultLayout,
       children: [
+        
+        
         {
           path: "",
           name: "home",
           component: SearchFlights,
           alias: "/search",
-          meta: { requiresAuth: true }
+          meta: { requiresAuth: false }
         },
+
+
+
+
+        // Extras
+        {
+          name: "chooseLocation",
+          path: "/choose/location/",
+          component: FlightSelection,
+          props: route => ({ ...route.params, ...route.query }), // converts query strings and params to props
+          meta: { requiresAuth: false }
+        },
+
+
+
+
+        {
+          name: "selectedLocation",
+          path: "/location/",
+          component: FlightSelection,
+          props: route => ({ ...route.params, ...route.query }), // converts query strings and params to props
+          meta: { requiresAuth: false }
+        },
+
+
+        
+
+        // Extras
+        {
+          name: "selectedFlight",
+          path: "/search/results/review",
+          component: FlightSelection,
+          props: route => ({ ...route.params, ...route.query }), // converts query strings and params to props
+          meta: { requiresAuth: false }
+        },
+
+
         {
           name: "searchResults",
           path: "/search/results",
-          component: FlightResults,
+          component: CarResults,
           props: route => ({ ...route.params, ...route.query }), // converts query strings and params to props
-          meta: { requiresAuth: true }
+          meta: { requiresAuth: false }
         },
         {
           name: "selectedFlight",
           path: "/search/results/review",
           component: FlightSelection,
           props: route => ({ ...route.params, ...route.query }), // converts query strings and params to props
-          meta: { requiresAuth: true }
+          meta: { requiresAuth: false }
         },
         {
           path: "/profile",
           name: "profile",
           component: Profile,
-          meta: { requiresAuth: true }
+          meta: { requiresAuth: false }
         },
         {
           path: "/profile/bookings",
           name: "bookings",
           component: Bookings,
-          meta: { requiresAuth: true }
+          meta: { requiresAuth: false }
         },
         {
           path: "/auth",
