@@ -156,7 +156,7 @@
     <div class="wrapper">
       <q-btn
         v-if="paginationToken"
-        @click="loadFlights"
+        @click="loadCars"
         class="cta__button"
         color="secondary"
         size="1rem"
@@ -220,7 +220,7 @@ export default {
      * if our authentication guards && profile module have an user in place
      */
     // if (this.isAuthenticated) {
-    this.loadFlights();
+    this.loadCars();
     // }
   },
   methods: {
@@ -230,13 +230,11 @@ export default {
      */
     async loadCars() {
       try {
-          await this.$store.dispatch("catalog/fetchFlights", {
-            date: this.date,
-            departure: this.departure,
-            arrival: this.arrival,
+          await this.$store.dispatch("catalog/fetchCars", {
+            carMake: this.carMake,
+            carModel: this.carModel,
             paginationToken: this.paginationToken
           });
-
           this.filteredCars = this.sortByDeparture(this.flights);
       } catch (error) {
         console.error(error);
@@ -268,7 +266,7 @@ export default {
     },
 
 
-     async loadFlights() {
+     async loadCars() {
       try {
         if (this.isAuthenticated) {
           await this.$store.dispatch("catalog/fetchFlights", {
@@ -278,7 +276,7 @@ export default {
             paginationToken: this.paginationToken
           });
 
-          this.filteredCars = this.sortByDeparture(this.flights);
+          this.filteredCars
         }
       } catch (error) {
         console.error(error);

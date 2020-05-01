@@ -40,6 +40,7 @@ export async function fetchBooking(
   paginationToken = ""
 ) {
   console.group("store/bookings/actions/fetchBooking");
+  
   Loading.show({
     message: "Loading bookings..."
   });

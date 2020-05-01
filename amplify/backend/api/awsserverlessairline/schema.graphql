@@ -1,4 +1,62 @@
 
+# definition of the car model
+# based on otomoto API schema
+# https://www.otomoto.pl/api/doc/#api-Advert-GetAdvert
+type Car
+    @model 
+    @key(
+        name: "ByCarMake",
+        fields: ["make", "year"],
+        queryField: "getCarsByMake"
+    )
+
+    @key(
+        name: "ByCarMakeAndModel",
+        fields: ["make","model", "year"],
+        queryField: "getCarsByMakeAndModel"
+    )
+
+{
+    id: ID!
+    make: String!
+    model: String!
+    version: Int!
+    year: Int!
+    mileage: Int!
+    fuel_type: String!
+    engine_capacity: Int!
+    engine_power: Int!
+    gearbox: String!
+    transmission: String!
+    co2_emissions: Int!
+    particle_filter: Int!
+    damaged: Int!
+    body_type: String!
+    door_count: Int!
+    color: String!
+    metallic: Int!
+    pearl: Int!
+    matt: Int!
+    acrylic: Int!
+    nr_seats: Int!
+    rhd: Int!
+    price: Int!
+    vat_discount: Int!
+    vat: Int!
+    financial_option: Int!
+    leasing_concession: Int!
+    country_origin: String!
+    date_registration: String!
+    vin: String!
+    registered: Int!
+    original_owner: Int!
+    no_accident: Int!
+    service_record: Int!
+    historical_vehicle: Int!
+    tuning: Int!
+    approval_for_goods: Int!
+}
+
 # Flight uses API authorization level
 # and fine-grained auth to only allow authenticated users to read flights
 # except users member of Admin group

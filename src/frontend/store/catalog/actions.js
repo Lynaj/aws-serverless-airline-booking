@@ -1,8 +1,8 @@
 import Flight from "../../shared/models/FlightClass";
+import Car from "../../shared/models/CarClass";
+
 import { API, graphqlOperation } from "aws-amplify";
 import { getFlightBySchedule, getFlight } from "./graphql";
-
-
 
 /**
  *
@@ -24,49 +24,46 @@ import { getFlightBySchedule, getFlight } from "./graphql";
 
 export async function fetchCars(
   { commit },
-  { date, carMake, carModel, paginationToken = "" }
+  { carMake, carModel, paginationToken = "" }
 ) {
   console.group("store/catalog/actions/fetchCars");
   commit("SET_LOADER", true);
 
   var nextToken = paginationToken || null;
-  
 
   try {
-    const flightOpts = {
-      departureAirportCode: departure,
-      arrivalAirportCodeDepartureDate: {
-        beginsWith: {
-          arrivalAirportCode: arrival,
-          departureDate: date
-        }
-      },
-      filter: { seatCapacity: { gt: 0 } },
+    const carsOpts = {
+      make: carMake,
+      model: carModel,
       limit: 5,
       nextToken: nextToken
     };
 
-    console.log("Fetching flight data");
-    console.log(flightOpts);
+    console.log("Fetching cars data");
+    console.log(carsOpts);
+    
     const {
       // @ts-ignore
       data: {
-        getFlightBySchedule: { items: flightData, nextToken: paginationToken }
+        getCarsByMake: { items: carData, nextToken: paginationToken }
       }
-    } = await API.graphql(graphqlOperation(getFlightBySchedule, flightOpts));
-    const flights = flightData.map(flight => new Flight(flight));
+    } = await API.graphql(graphqlOperation(getFlightBySchedule, carsOpts));
+    
+    const cars = carData.map(car => new Car(car));
 
-    console.log(flights);
-    commit("SET_CARS", flights);
+    console.log(cars);
+    commit("SET_CARS", cars);
     commit("SET_CARS_PAGINATION", paginationToken);
     commit("SET_LOADER", false);
     console.groupEnd();
+
   } catch (error) {
+
     commit("SET_LOADER", false);
     console.error(error);
     throw new Error(error);
-  }
 
+  }
 }
 
 

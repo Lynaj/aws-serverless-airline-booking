@@ -19,10 +19,26 @@ export const SET_FLIGHTS = async (state, flights) => {
 
 /**
  *
+ * Catalog [Vuex Module Mutation](https://vuex.vuejs.org/guide/mutations.html) - SET_CARS mutates Catalog state with an array of Cars as payload.
+ * @param {object} state - Vuex Catalog Module State
+ * @param {Flight[]} cars - Array of cars as payload
+ */
+ export const SET_CARS = async (state, cars) => {
+  if (state.cars.length === 0) {
+    state.cars = cars;
+  } else {
+    let newcars = [...cars, state.cars].flat(5);
+    state.cars = [...new Set(newcars)];
+  }
+};
+
+/**
+ *
  * Catalog [Vuex Module Mutation](https://vuex.vuejs.org/guide/mutations.html) - SET_LOADER mutates Catalog state to control content loader when necessary.
  * @param {object} state - Vuex Catalog Module State
  * @param {boolean} isLoading - Boolean that controls whether content loader should be running
  * @see {@link fetchFlights} for more info on action that calls SET_LOADER
+ * @see {@link fetchCars} for more info on action that calls SET_LOADER
  * @see {@link fetchByFlightNumber} for more info on action that calls SET_LOADER
  */
 export const SET_LOADER = (state, isLoading) => {
